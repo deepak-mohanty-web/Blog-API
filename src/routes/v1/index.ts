@@ -1,7 +1,8 @@
 // node module
 import { Router } from 'express';
 const router = Router();
-
+//routes
+import authRoutes from '@/routes/v1/auth';
 // root routes
 router.get('/', (req, res) => {
   res.status(200).json({
@@ -13,5 +14,6 @@ router.get('/', (req, res) => {
   })
 })
 
+router.use('/auth', authRoutes);
 
 export default router;
