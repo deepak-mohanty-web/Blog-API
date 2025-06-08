@@ -14,7 +14,6 @@ import type { Request, Response } from 'express';
 type UserData = Pick<IUser, 'email' | 'password'>
 
 const login = async (req: Request, res: Response):Promise<void> => {
-
   try {
     const { email } = req.body as UserData;
     const user = await User.findOne({ email })
