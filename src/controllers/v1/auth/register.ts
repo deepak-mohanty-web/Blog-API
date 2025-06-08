@@ -1,4 +1,3 @@
-
 // custom modules
 import { generateAccessToken, generateRefreshToken } from '@/lib/jwt';
 import { logger } from '@/lib/winston';
@@ -11,7 +10,7 @@ import User from '@/models/user';
 import config from '@/config';
 import type { IUser } from '@/models/user';
 import type { Request, Response } from 'express';
-import { emit } from 'process';
+
 
 type UserData = Pick<IUser, 'email' | 'password' | 'role'>
 
@@ -29,7 +28,6 @@ type UserData = Pick<IUser, 'email' | 'password' | 'role'>
    }
    try {
      const username = getUserName();
-     
      const newUser = await User.create({
        username,
        email,

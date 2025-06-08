@@ -1,9 +1,10 @@
 // node modules
 import bcrypt from 'bcrypt';
 import { Router } from 'express';
-import { body } from 'express-validator';
+import { body, cookie } from 'express-validator';
 //controllers
 import login from '@/controllers/v1/auth/login';
+import refreshToken from '@/controllers/v1/auth/refresh_token';
 import register from '@/controllers/v1/auth/register';
 //middleware
 import validationError from '@/middlewares/validationError';
@@ -59,7 +60,6 @@ router.post(
       const existUser = await User.exists({ email: value });
       if (!existUser) {
         throw new Error("User email and password is invalid");
-        
       }
     })
   ,
@@ -88,5 +88,15 @@ router.post(
   validationError,
   login
 );
+router.post(
+  '/refresh-token',
+  cookie('refreshToken')
+    .notEmpty()
+    .withMessage("Refresh token required")
+    .isJWT()
+  .withMessage("Invalid refresh token"),
+  validationError,
+  refreshToken
+)
 
 export default router;
