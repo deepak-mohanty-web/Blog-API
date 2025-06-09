@@ -3,6 +3,7 @@ import { Router } from 'express';
 const router = Router();
 //routes
 import authRoutes from '@/routes/v1/auth';
+import userRoutes from '@/routes/v1/user'
 // root routes
 router.get('/', (req, res) => {
   res.status(200).json({
@@ -15,5 +16,6 @@ router.get('/', (req, res) => {
 })
 
 router.use('/auth', authRoutes);
+router.use('/users',userRoutes)
 
 export default router;
