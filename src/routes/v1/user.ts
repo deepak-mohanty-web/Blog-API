@@ -7,10 +7,12 @@ import authorize from '@/middlewares/authorize';
 //controller
 import getCurrentUser from '@/controllers/v1/user/get_current_user';
 import updateCurrentUser from '@/controllers/v1/user/update_current_user';
+import deleteCurrentUser from '@/controllers/v1/user/delete_current_user';
 // model
 import User from '@/models/user';
 // custom modules
 import validationError from '@/middlewares/validationError';
+
 
 
 
@@ -72,5 +74,11 @@ router.put(
 
   validationError,
   updateCurrentUser
+)
+router.delete(
+  '/current',
+  authenticate,
+  authorize(['admin', 'user']),
+  deleteCurrentUser
 )
 export default router;
