@@ -10,7 +10,7 @@ import type { Request, Response } from 'express';
 const getCurrentUser = async (req: Request, res: Response) => {
   const userId = req.userId;
   try {
-    const user = await User.findById(userId).select('-_v').lean().exec();
+    const user = await User.findById(userId).select('-__v').lean().exec();
     res.status(200).json({
       user
     })
