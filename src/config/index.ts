@@ -17,7 +17,9 @@ const config = {
   WHITELIST_ADMIN_MAIL: [
     "erdeepak420455@gmail.com",
     "deepak.mohanty.dev@gmail.com"
-  ]
+  ],
+  defaultResLimit: 20,
+  defaultResOffset:0,
 }
 
 export default config;

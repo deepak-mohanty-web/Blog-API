@@ -1,9 +1,7 @@
 // custom module
 import { logger } from '@/lib/winston';
-
 // model
 import User from '@/models/user';
-
 // type
 import type { Request, Response } from 'express';
 
