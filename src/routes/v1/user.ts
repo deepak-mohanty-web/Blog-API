@@ -10,10 +10,12 @@ import getAllUser from '@/controllers/v1/user/get_all_user';
 import getCurrentUser from '@/controllers/v1/user/get_current_user';
 import getUser from '@/controllers/v1/user/get_user';
 import updateCurrentUser from '@/controllers/v1/user/update_current_user';
+import deleteUser from '@/controllers/v1/user/delete_user';
 // model
 import User from '@/models/user';
 // custom modules
 import validationError from '@/middlewares/validationError';
+
 
 
 const router = Router();
@@ -102,8 +104,20 @@ router.get(
     .notEmpty()
     .isMongoId()
     .withMessage("Invalid user ID"),
+  validationError,
   authenticate,
   authorize(["admin"]),
   getUser
+);
+router.delete(
+  '/:userId',
+  param('userId')
+    .notEmpty()
+    .isMongoId()
+    .withMessage("Invalid user ID"),
+  validationError,
+  authenticate,
+  authorize(["admin"]),
+  deleteUser
 ) 
 export default router;
