@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 
 //types
-import type ms from 'ms'
+import type ms from 'ms';
 dotenv.config();
 
 const config = {
@@ -19,7 +19,10 @@ const config = {
     "deepak.mohanty.dev@gmail.com"
   ],
   defaultResLimit: 20,
-  defaultResOffset:0,
+  defaultResOffset: 0,
+  CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET:process.env.CLOUDINARY_API_SECRET,
 }
 
 export default config;
