@@ -1,6 +1,6 @@
 //node modules
 import { Router } from 'express';
-import { body,query } from 'express-validator';
+import { body, param, query } from 'express-validator';
 import multer from 'multer';
 //middleware
 import authenticate from '@/middlewares/authenticate';
@@ -10,6 +10,7 @@ import validationError from '@/middlewares/validationError';
 // controllers
 import createBlogs from '@/controllers/v1/blogs/create_blog.';
 import getAllBlogs from '@/controllers/v1/blogs/get_all_blog';
+import getBlogsByUser from '@/controllers/v1/blogs/get_blogs_by_user';
 
 const upload = multer();
 
@@ -52,4 +53,22 @@ router.get(
   validationError,
   getAllBlogs
 );
+router.get(
+  '/user/:userId',
+  authenticate,
+  authorize(['admin', 'user']),
+  param('userId')
+    .isMongoId()
+    .withMessage("Invalid user ID"),
+  query('limit')
+    .optional()
+    .isInt({ min: 1, max: 50 })
+    .withMessage("Limit must be in between 1 to 50"),
+  query('offset')
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage("Offset must be a positive integer"),
+  validationError,
+  getBlogsByUser
+)
 export default router;

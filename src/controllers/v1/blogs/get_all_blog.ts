@@ -18,7 +18,7 @@ const getAllBlogs = async (req: Request, res: Response): Promise<void> => {
                     const userId = req.userId;
                     const limit = parseInt(req.query.limit as string) || config.defaultResLimit;
                     const offset = parseInt(req.query.offset as string) || config.defaultResOffset;
-                    const total = await Blog.countDocuments();
+                    
 
                     const user = await User
                               .findById(userId)
@@ -30,8 +30,8 @@ const getAllBlogs = async (req: Request, res: Response): Promise<void> => {
                     if (user?.role === 'user') {
                               query.status = "published";
                     }
-
-
+                    
+                    const total = await Blog.countDocuments(query);
                     const blogs = await Blog
                               .find(query)
                               .select('-banner.publicId -__v')
