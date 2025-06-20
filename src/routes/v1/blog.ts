@@ -11,6 +11,7 @@ import validationError from '@/middlewares/validationError';
 import createBlogs from '@/controllers/v1/blogs/create_blog.';
 import getAllBlogs from '@/controllers/v1/blogs/get_all_blog';
 import getBlogsByUser from '@/controllers/v1/blogs/get_blogs_by_user';
+import getBlogsBySlug from '@/controllers/v1/blogs/get_blogs_by_slug';
 
 const upload = multer();
 
@@ -70,5 +71,12 @@ router.get(
     .withMessage("Offset must be a positive integer"),
   validationError,
   getBlogsByUser
+);
+router.get(
+  '/:slug',
+  authenticate,
+  authorize(['admin', 'user']),
+  param('slug').notEmpty().withMessage("Slug is required"),
+  getBlogsBySlug
 )
 export default router;

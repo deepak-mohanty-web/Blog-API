@@ -1,10 +1,10 @@
   // custom modules
   import config from '@/config';
-import { logger } from '@/lib/winston';
-import mongoose from 'mongoose';
+  import { logger } from '@/lib/winston';
+  import mongoose from 'mongoose';
   // models
   import Blog from '@/models/blog';
-import User from '@/models/user';
+  import User from '@/models/user';
 
   // type   
   import type { Request, Response } from 'express';
@@ -30,30 +30,14 @@ import User from '@/models/user';
         return;
       }
   
-      console.log("🧾 Current User Role:", currentUser.role);
-  
+     
       const query: QueryType = {};
       if (currentUser?.role === 'user') {
         query.status = 'published';
       }
   
       const finalQuery = { author: userId, ...query };
-      console.log("🔍 Final Mongo Query:", finalQuery);
-  
-      // DEBUG: Check blog statuses for this user
-      const allUserBlogs = await Blog.find({ author: new mongoose.Types.ObjectId(userId) })
-        .select('title status createdAt')
-        .lean()
-        .exec();
-      
-      console.log("📊 All blogs for user (with status):", allUserBlogs);
-      console.log("📈 Blog status breakdown:", {
-        total: allUserBlogs.length,
-        published: allUserBlogs.filter(blog => blog.status === 'published').length,
-        draft: allUserBlogs.filter(blog => blog.status === 'draft').length,
-        other: allUserBlogs.filter(blog => blog.status !== 'published' && blog.status !== 'draft').length
-      });
-  
+
       const total = await Blog.countDocuments(finalQuery);
       const blogs = await Blog.find(finalQuery)
         .select('-banner.publicId')
